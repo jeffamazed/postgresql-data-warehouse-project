@@ -58,6 +58,18 @@ Develop SQL-based analytics to deliver detailed insights into:
 
 These insights empower stakeholders with key business metrics, enabling strategic decision-making.  
 
+## SQL Learning Journey
+
+A big thanks to **Baraa** on YouTube for the excellent SQL course.  
+This repository exists thanks to the clarity, structure, and practical examples provided in his tutorials.
+
+## Acknowledgment
+
+🙏 **Thank you, Baraa**, for breaking down SQL in a way that's easy to understand and apply.  
+Your content is incredibly helpful for both beginners and those brushing up their skills.
+
+Check out his channel: [Baraa - YouTube](https://www.youtube.com/@Baraa)
+
 ## 🛡️ License
 
 This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and share this project with proper attribution.
