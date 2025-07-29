@@ -63,12 +63,53 @@ These insights empower stakeholders with key business metrics, enabling strategi
 A big thanks to **Baraa** on YouTube for the excellent SQL course.  
 This repository exists thanks to the clarity, structure, and practical examples provided in his tutorials.
 
+---
+
 ## Acknowledgment
 
 🙏 **Thank you, Baraa**, for breaking down SQL in a way that's easy to understand and apply.  
 Your content is incredibly helpful for both beginners and those brushing up their skills.
 
 Check out his channel: [Baraa - YouTube](https://www.youtube.com/@Baraa)
+
+---
+
+## 📁 Folder Structure
+```
+.
+├── datasets/
+│   ├── source_crm/
+│   │   ├── cust_info.csv
+│   │   ├── prd_info.csv
+│   │   └── sales_details.csv
+│   └── source_erp/
+│       ├── CUST_AZ12.csv
+│       ├── LOC_A101.csv
+│       └── PX_CAT_G1V2.csv
+│
+├── docs/
+│   ├── data_architecture.pdf
+│   ├── data_catalog.md
+│   ├── data_flow_diagram.pdf
+│   ├── ETL.png
+│   ├── gold_layer_data_model.pdf
+│   ├── integration_model.pdf
+│   └── naming_conventions.md
+│
+├── scripts/
+│   ├── init_database.sql
+│   ├── 01-bronze/
+│   │   └── ddl_bronze.sql
+│   ├── 02-silver/
+│   │   ├── ddl_silver.sql
+│   │   └── str_proc_silver.sql
+│   └── 03-gold/
+│       └── ddl_gold.sql
+│
+├── tests
+```
+
+---
 
 ## 🛡️ License
 
