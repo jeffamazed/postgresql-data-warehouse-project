@@ -1,4 +1,11 @@
--- View for customers
+-- Drop views if they already exist to avoid conflicts during creation
+DROP VIEW IF EXISTS gold.dim_customers;
+DROP VIEW IF EXISTS gold.dim_products;
+DROP VIEW IF EXISTS gold.fact_sales;
+
+-- View: dim_customers
+-- This dimension provides enriched customer information by joining CRM and ERP systems.
+-- It supports customer segmentation, demographic analysis, and customer lifetime value analytics.
 
 CREATE VIEW gold.dim_customers AS
 SELECT
@@ -9,18 +16,21 @@ SELECT
   ci.cst_lastname AS last_name,
   la.cntry AS country,
   ci.cst_marital_status AS marital_status,
-  CASE WHEN ci.cst_gndr != 'n/a' THEN ci.cst_gndr -- CRM is the master for gender info
-       ELSE COALESCE(ca.gen, 'n/a')
-  END gender,
+  CASE 
+    WHEN ci.cst_gndr != 'n/a' THEN ci.cst_gndr  -- CRM is the master for gender info
+    ELSE COALESCE(ca.gen, 'n/a')
+  END AS gender,
   ca.bdate AS birth_date,
   ci.cst_create_date AS create_date
 FROM silver.crm_cust_info ci
 LEFT JOIN silver.erp_cust_az12 ca 
-ON ci.cst_key = ca.cid
+  ON ci.cst_key = ca.cid
 LEFT JOIN silver.erp_loc_a101 la
-ON ci.cst_key = la.cid;
+  ON ci.cst_key = la.cid;
 
--- View for products 
+-- View: dim_products
+-- This dimension provides current product catalog data enriched with category details.
+-- It is used for product performance analysis, sales attribution, and product lifecycle management.
 
 CREATE VIEW gold.dim_products AS
 SELECT
@@ -37,10 +47,12 @@ SELECT
   pn.prd_start_dt AS start_date
 FROM silver.crm_prd_info pn
 LEFT JOIN silver.erp_px_cat_g1v2 pc
-ON pn.cat_id = pc.id
-WHERE prd_end_dt IS NULL;-- Filter out all historical data
+  ON pn.cat_id = pc.id
+WHERE prd_end_dt IS NULL; -- Exclude inactive or historical products
 
--- View for sales
+-- View: fact_sales
+-- This fact table combines sales transaction data with product and customer dimensions.
+-- It serves as the foundation for sales performance dashboards, revenue trend analysis, and customer purchase behavior insights.
 
 CREATE VIEW gold.fact_sales AS
 SELECT 
@@ -55,7 +67,6 @@ SELECT
   sd.sls_price AS price
 FROM silver.crm_sales_details sd
 LEFT JOIN gold.dim_products pr
-ON sd.sls_prd_key = pr.product_number
+  ON sd.sls_prd_key = pr.product_number
 LEFT JOIN gold.dim_customers cu
-ON sd.sls_cust_id = cu.customer_id;
-
+  ON sd.sls_cust_id = cu.customer_id;
